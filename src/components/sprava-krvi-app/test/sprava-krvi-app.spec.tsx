@@ -10,7 +10,7 @@ describe('sprava-krvi-app', () => {
     expect(page.root).toEqualHtml(`
       <sprava-krvi-app>
         <mock:shadow-root>
-          <slot></slot>
+          <slot>Hehe</slot>
         </mock:shadow-root>
       </sprava-krvi-app>
     `);
