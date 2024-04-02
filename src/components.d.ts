@@ -6,30 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
-    }
     interface SpravaKrviApp {
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
-    }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
-    };
     interface HTMLSpravaKrviAppElement extends Components.SpravaKrviApp, HTMLStencilElement {
     }
     var HTMLSpravaKrviAppElement: {
@@ -37,29 +17,13 @@ declare global {
         new (): HTMLSpravaKrviAppElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
         "sprava-krvi-app": HTMLSpravaKrviAppElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
-    }
     interface SpravaKrviApp {
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
         "sprava-krvi-app": SpravaKrviApp;
     }
 }
@@ -67,7 +31,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "sprava-krvi-app": LocalJSX.SpravaKrviApp & JSXBase.HTMLAttributes<HTMLSpravaKrviAppElement>;
         }
     }
