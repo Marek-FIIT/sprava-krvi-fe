@@ -1,19 +1,114 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, State, h } from '@stencil/core';
 
+declare global {
+  interface Window { navigation: any; }
+}
 @Component({
   tag: 'sprava-krvi-app',
   styleUrl: 'sprava-krvi-app.css',
   shadow: true,
 })
 export class SpravaKrviApp {
+  @State() private relativePath = "";
 
+  @Prop() basePath: string="";
+
+  componentWillLoad() {
+    const baseUri = new URL(this.basePath, document.baseURI || "/").pathname;
+
+    const toRelative = (path: string) => {
+      if (path.startsWith( baseUri)) {
+        this.relativePath = path.slice(baseUri.length)
+      } else {
+        this.relativePath = ""
+      }
+    }
+
+    window.navigation?.addEventListener("navigate", (ev: Event) => {
+      if ((ev as any).canIntercept) { (ev as any).intercept(); }
+      let path = new URL((ev as any).destination.url).pathname;
+      toRelative(path);
+    });
+
+    toRelative(location.pathname)
+  }
   render() {
-    return (
-      <Host>
-        <img src={'https://imgb.ifunny.co/images/171a6d99da402b4f4fe5654590e5e97908d6f1f1e54a9bde0080b7cac77206ad_1.jpg'}/>
-        {/* <slot>Hehe</slot> */}
-      </Host>
-    );
+    let element = "homepage"
+    let entryId = "@new"
+  
+    if ( this.relativePath.startsWith("entry/"))
+    {
+      element = "editor";
+      entryId = this.relativePath.split("/")[1]
+    }
+
+    if ( this.relativePath.startsWith("list"))
+      {
+        element = "list";
+      }
+    if ( this.relativePath.startsWith("unitlist"))
+      {
+        element = "unitlist";
+      }
+    if ( this.relativePath.startsWith("unitentry"))
+      {
+        element = "uniteditor";
+        entryId = this.relativePath.split("/")[1]
+      }
+  
+    const navigate = (path:string) => {
+      const absolute = new URL(path, new URL(this.basePath, document.baseURI)).pathname;
+      window.navigation.navigate(absolute)
+    }
+  
+    const renderElement = () => {
+      switch (element) {
+        case "homepage":
+          return (
+            <sprava-krvi-homepage
+              ondonors-clicked={() => navigate("./list")}
+              onunits-clicked={() => navigate("./unitlist")}
+            ></sprava-krvi-homepage>
+          );
+        case "editor":
+          return (
+            <sprava-krvi-editor
+              entry-id={entryId}
+              oneditor-closed={() => navigate("./list")}
+            ></sprava-krvi-editor>
+          );
+        case "uniteditor":
+            return (
+              <sprava-krvi-uniteditor
+                entry-id={entryId}
+                oneditor-closed={() => navigate("./unitlist")}
+              ></sprava-krvi-uniteditor>
+            );
+        case "list":
+          return (
+            <sprava-krvi-list
+              onentry-clicked={(ev: CustomEvent<string>) => navigate("./entry/" + ev.detail)}
+              oneditor-closed={() => navigate("./homepage")}
+            ></sprava-krvi-list>
+          );
+        case "unitlist":
+            return (
+              <sprava-krvi-unitlist
+                onentry-clicked={(ev: CustomEvent<string>) => navigate("./unitentry/" + ev.detail)}
+                oneditor-closed={() => navigate("./homepage")}
+              ></sprava-krvi-unitlist>
+            );
+        default:
+          return (
+            <sprava-krvi-homepage
+              ondonors-clicked={() => navigate("./list")}
+              onunits-clicked={() => navigate("./unitlist")}
+            ></sprava-krvi-homepage>
+          );
+      }
+    };
+    
+    return <Host>{renderElement()}</Host>;
   }
 
 }

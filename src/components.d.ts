@@ -7,7 +7,40 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SpravaKrviApp {
+        "basePath": string;
     }
+    interface SpravaKrviEditor {
+        "entryId": string;
+    }
+    interface SpravaKrviHomepage {
+    }
+    interface SpravaKrviList {
+    }
+    interface SpravaKrviUniteditor {
+        "entryId": string;
+    }
+    interface SpravaKrviUnitlist {
+    }
+}
+export interface SpravaKrviEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSpravaKrviEditorElement;
+}
+export interface SpravaKrviHomepageCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSpravaKrviHomepageElement;
+}
+export interface SpravaKrviListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSpravaKrviListElement;
+}
+export interface SpravaKrviUniteditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSpravaKrviUniteditorElement;
+}
+export interface SpravaKrviUnitlistCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSpravaKrviUnitlistElement;
 }
 declare global {
     interface HTMLSpravaKrviAppElement extends Components.SpravaKrviApp, HTMLStencilElement {
@@ -16,15 +49,134 @@ declare global {
         prototype: HTMLSpravaKrviAppElement;
         new (): HTMLSpravaKrviAppElement;
     };
+    interface HTMLSpravaKrviEditorElementEventMap {
+        "editor-closed": string;
+    }
+    interface HTMLSpravaKrviEditorElement extends Components.SpravaKrviEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSpravaKrviEditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviEditorElement, ev: SpravaKrviEditorCustomEvent<HTMLSpravaKrviEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSpravaKrviEditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviEditorElement, ev: SpravaKrviEditorCustomEvent<HTMLSpravaKrviEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSpravaKrviEditorElement: {
+        prototype: HTMLSpravaKrviEditorElement;
+        new (): HTMLSpravaKrviEditorElement;
+    };
+    interface HTMLSpravaKrviHomepageElementEventMap {
+        "donors-clicked": string;
+        "units-clicked": string;
+    }
+    interface HTMLSpravaKrviHomepageElement extends Components.SpravaKrviHomepage, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSpravaKrviHomepageElementEventMap>(type: K, listener: (this: HTMLSpravaKrviHomepageElement, ev: SpravaKrviHomepageCustomEvent<HTMLSpravaKrviHomepageElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSpravaKrviHomepageElementEventMap>(type: K, listener: (this: HTMLSpravaKrviHomepageElement, ev: SpravaKrviHomepageCustomEvent<HTMLSpravaKrviHomepageElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSpravaKrviHomepageElement: {
+        prototype: HTMLSpravaKrviHomepageElement;
+        new (): HTMLSpravaKrviHomepageElement;
+    };
+    interface HTMLSpravaKrviListElementEventMap {
+        "entry-clicked": string;
+        "editor-closed": string;
+    }
+    interface HTMLSpravaKrviListElement extends Components.SpravaKrviList, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSpravaKrviListElementEventMap>(type: K, listener: (this: HTMLSpravaKrviListElement, ev: SpravaKrviListCustomEvent<HTMLSpravaKrviListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSpravaKrviListElementEventMap>(type: K, listener: (this: HTMLSpravaKrviListElement, ev: SpravaKrviListCustomEvent<HTMLSpravaKrviListElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSpravaKrviListElement: {
+        prototype: HTMLSpravaKrviListElement;
+        new (): HTMLSpravaKrviListElement;
+    };
+    interface HTMLSpravaKrviUniteditorElementEventMap {
+        "editor-closed": string;
+    }
+    interface HTMLSpravaKrviUniteditorElement extends Components.SpravaKrviUniteditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSpravaKrviUniteditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviUniteditorElement, ev: SpravaKrviUniteditorCustomEvent<HTMLSpravaKrviUniteditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSpravaKrviUniteditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviUniteditorElement, ev: SpravaKrviUniteditorCustomEvent<HTMLSpravaKrviUniteditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSpravaKrviUniteditorElement: {
+        prototype: HTMLSpravaKrviUniteditorElement;
+        new (): HTMLSpravaKrviUniteditorElement;
+    };
+    interface HTMLSpravaKrviUnitlistElementEventMap {
+        "entry-clicked": string;
+        "editor-closed": string;
+    }
+    interface HTMLSpravaKrviUnitlistElement extends Components.SpravaKrviUnitlist, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSpravaKrviUnitlistElementEventMap>(type: K, listener: (this: HTMLSpravaKrviUnitlistElement, ev: SpravaKrviUnitlistCustomEvent<HTMLSpravaKrviUnitlistElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSpravaKrviUnitlistElementEventMap>(type: K, listener: (this: HTMLSpravaKrviUnitlistElement, ev: SpravaKrviUnitlistCustomEvent<HTMLSpravaKrviUnitlistElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSpravaKrviUnitlistElement: {
+        prototype: HTMLSpravaKrviUnitlistElement;
+        new (): HTMLSpravaKrviUnitlistElement;
+    };
     interface HTMLElementTagNameMap {
         "sprava-krvi-app": HTMLSpravaKrviAppElement;
+        "sprava-krvi-editor": HTMLSpravaKrviEditorElement;
+        "sprava-krvi-homepage": HTMLSpravaKrviHomepageElement;
+        "sprava-krvi-list": HTMLSpravaKrviListElement;
+        "sprava-krvi-uniteditor": HTMLSpravaKrviUniteditorElement;
+        "sprava-krvi-unitlist": HTMLSpravaKrviUnitlistElement;
     }
 }
 declare namespace LocalJSX {
     interface SpravaKrviApp {
+        "basePath"?: string;
+    }
+    interface SpravaKrviEditor {
+        "entryId"?: string;
+        "onEditor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
+    }
+    interface SpravaKrviHomepage {
+        "onDonors-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
+        "onUnits-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
+    }
+    interface SpravaKrviList {
+        "onEditor-closed"?: (event: SpravaKrviListCustomEvent<string>) => void;
+        "onEntry-clicked"?: (event: SpravaKrviListCustomEvent<string>) => void;
+    }
+    interface SpravaKrviUniteditor {
+        "entryId"?: string;
+        "onEditor-closed"?: (event: SpravaKrviUniteditorCustomEvent<string>) => void;
+    }
+    interface SpravaKrviUnitlist {
+        "onEditor-closed"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
+        "onEntry-clicked"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
     }
     interface IntrinsicElements {
         "sprava-krvi-app": SpravaKrviApp;
+        "sprava-krvi-editor": SpravaKrviEditor;
+        "sprava-krvi-homepage": SpravaKrviHomepage;
+        "sprava-krvi-list": SpravaKrviList;
+        "sprava-krvi-uniteditor": SpravaKrviUniteditor;
+        "sprava-krvi-unitlist": SpravaKrviUnitlist;
     }
 }
 export { LocalJSX as JSX };
@@ -32,6 +184,11 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "sprava-krvi-app": LocalJSX.SpravaKrviApp & JSXBase.HTMLAttributes<HTMLSpravaKrviAppElement>;
+            "sprava-krvi-editor": LocalJSX.SpravaKrviEditor & JSXBase.HTMLAttributes<HTMLSpravaKrviEditorElement>;
+            "sprava-krvi-homepage": LocalJSX.SpravaKrviHomepage & JSXBase.HTMLAttributes<HTMLSpravaKrviHomepageElement>;
+            "sprava-krvi-list": LocalJSX.SpravaKrviList & JSXBase.HTMLAttributes<HTMLSpravaKrviListElement>;
+            "sprava-krvi-uniteditor": LocalJSX.SpravaKrviUniteditor & JSXBase.HTMLAttributes<HTMLSpravaKrviUniteditorElement>;
+            "sprava-krvi-unitlist": LocalJSX.SpravaKrviUnitlist & JSXBase.HTMLAttributes<HTMLSpravaKrviUnitlistElement>;
         }
     }
 }
