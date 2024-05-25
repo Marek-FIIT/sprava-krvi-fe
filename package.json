@@ -27,13 +27,16 @@
     "loader/"
   ],
   "scripts": {
+    "convert-openapi": "js-yaml  ./api/sprava-krvi.openapi.yaml > .openapi.json",
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "openapi": "openapi-generator-cli generate"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4",
     "@stencil/core": "^4.7.0",
     "@types/jest": "^29.5.6",
     "@types/node": "^16.18.11",
@@ -43,6 +46,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@material/web": "^1.4.0"
+    "@material/mwc-checkbox": "^0.27.0",
+    "@material/mwc-formfield": "^0.27.0",
+    "@material/mwc-icon": "^0.27.0",
+    "@material/web": "^1.4.0",
+    "axios": "^1.6.0"
   }
 }

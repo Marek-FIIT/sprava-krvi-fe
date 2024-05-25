@@ -10,8 +10,8 @@ declare global {
 })
 export class SpravaKrviApp {
   @State() private relativePath = "";
-
   @Prop() basePath: string="";
+  @Prop() apiBase: string;
 
   componentWillLoad() {
     const baseUri = new URL(this.basePath, document.baseURI || "/").pathname;
@@ -72,28 +72,28 @@ export class SpravaKrviApp {
           );
         case "editor":
           return (
-            <sprava-krvi-editor
+            <sprava-krvi-editor api-base={this.apiBase}
               entry-id={entryId}
               oneditor-closed={() => navigate("./list")}
             ></sprava-krvi-editor>
           );
         case "uniteditor":
             return (
-              <sprava-krvi-uniteditor
+              <sprava-krvi-uniteditor api-base={this.apiBase}
                 entry-id={entryId}
                 oneditor-closed={() => navigate("./unitlist")}
               ></sprava-krvi-uniteditor>
             );
         case "list":
           return (
-            <sprava-krvi-list
+            <sprava-krvi-list api-base={this.apiBase}
               onentry-clicked={(ev: CustomEvent<string>) => navigate("./entry/" + ev.detail)}
               oneditor-closed={() => navigate("./homepage")}
             ></sprava-krvi-list>
           );
         case "unitlist":
             return (
-              <sprava-krvi-unitlist
+              <sprava-krvi-unitlist api-base={this.apiBase}
                 onentry-clicked={(ev: CustomEvent<string>) => navigate("./unitentry/" + ev.detail)}
                 oneditor-closed={() => navigate("./homepage")}
               ></sprava-krvi-unitlist>

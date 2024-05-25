@@ -1,4 +1,5 @@
-import { Component, Event, EventEmitter,  Host, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
+import { DonorsApiFactory, DonorListEntry } from '../../api/sprava-krvi';
 
 @Component({
   tag: 'sprava-krvi-list',
@@ -8,60 +9,64 @@ import { Component, Event, EventEmitter,  Host, h } from '@stencil/core';
 export class SpravaKrviList {
   @Event({ eventName: "entry-clicked"}) entryClicked: EventEmitter<string>;
   @Event({eventName: "editor-closed"}) editorClosed: EventEmitter<string>;
-  waitingPatients: any[];
+  @Prop() apiBase: string;
+  @State() errorMessage: string;
 
-  private async getWaitingPatientsAsync(){
-    return await Promise.resolve(
-      [{
-          name: 'Jožko Púčik',
-          patientId: '10001',
-          since: new Date(Date.now() - 10 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 65 * 60).toISOString(),
-          estimatedDurationMinutes: 15,
-          condition: 'Kontrola'
-      }, {
-          name: 'Bc. August Cézar',
-          patientId: '10096',
-          since: new Date(Date.now() - 30 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 30 * 60).toISOString(),
-          estimatedDurationMinutes: 20,
-          condition: 'Teploty'
-      }, {
-          name: 'Ing. Ferdinand Trety',
-          patientId: '10028',
-          since: new Date(Date.now() - 72 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 5 * 60).toISOString(),
-          estimatedDurationMinutes: 15,
-          condition: 'Bolesti hrdla'
-      }]
-    );
+  Donors: DonorListEntry[];
+
+  private async getDonorsAsync(): Promise<DonorListEntry[]>{
+    try {
+      const response = await
+      DonorsApiFactory(undefined, this.apiBase).
+          getDonors()
+      if (response.status < 299) {
+        console.log(response.data)
+        console.log(typeof response.data)
+        return response.data;
+      } else {
+        this.errorMessage = `Cannot retrieve list of waiting patients: ${response.statusText}`
+      }
+    } catch (err: any) {
+      this.errorMessage = `Cannot retrieve list of waiting patients: ${err.message || "unknown"}`
+    }
+    return [];
   }
 
   async componentWillLoad() {
-    this.waitingPatients = await this.getWaitingPatientsAsync();
+    this.Donors = await this.getDonorsAsync();
   }
   render() {
     return (
       <Host>
-          <md-list>
-          {this.waitingPatients.map((patient, index) =>
-            <md-list-item onClick={ () => this.entryClicked.emit(index.toString())}>
-              <div slot="headline">{patient.name}</div>
-              <div slot="supporting-text">{"Predpokladaný vstup: " + this.isoDateToLocale(patient.estimatedStart)}</div>
-                <md-icon slot="start">person</md-icon>
+  {this.errorMessage ? (
+    <div class="error">{this.errorMessage}</div>
+  ) : (
+    <div>
+      {this.Donors != null && (
+        <md-list>
+          {this.Donors.map((donor) => (
+            <md-list-item onClick={() => this.entryClicked.emit(donor.id)}>
+              <div slot="headline">{donor.first_name + " " + donor.last_name}</div>
+              <div slot="supporting-text">{donor.id}</div>
+              <div slot="supporting-text">{donor.blood_type + donor.blood_rh}</div>
+              <md-icon slot="start">person</md-icon>
             </md-list-item>
-          )}
+          ))}
         </md-list>
-        <md-filled-button id="cancel"
-          onClick={() => this.editorClosed.emit("cancel")}>
-          <md-icon slot="icon">homepage</md-icon>
-          Domov
-        </md-filled-button>
-      </Host>
+      )}
+      <md-filled-button id="cancel" onClick={() => this.editorClosed.emit("cancel")}>
+        <md-icon slot="icon">homepage</md-icon>
+        Domov
+      </md-filled-button>
+    
+
+    <md-filled-icon-button class="add-button" onclick={() => this.entryClicked.emit("@new")}>
+      <md-icon>add</md-icon>
+    </md-filled-icon-button>
+    </div>
+  )}
+</Host>
+
     );
-  }
-  private isoDateToLocale(iso:string) {
-    if(!iso) return '';
-    return new Date(Date.parse(iso)).toLocaleTimeString()
   }
 }

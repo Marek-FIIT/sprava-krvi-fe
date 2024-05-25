@@ -7,19 +7,24 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SpravaKrviApp {
+        "apiBase": string;
         "basePath": string;
     }
     interface SpravaKrviEditor {
+        "apiBase": string;
         "entryId": string;
     }
     interface SpravaKrviHomepage {
     }
     interface SpravaKrviList {
+        "apiBase": string;
     }
     interface SpravaKrviUniteditor {
+        "apiBase": string;
         "entryId": string;
     }
     interface SpravaKrviUnitlist {
+        "apiBase": string;
     }
 }
 export interface SpravaKrviEditorCustomEvent<T> extends CustomEvent<T> {
@@ -51,6 +56,7 @@ declare global {
     };
     interface HTMLSpravaKrviEditorElementEventMap {
         "editor-closed": string;
+        "entry-clicked": string;
     }
     interface HTMLSpravaKrviEditorElement extends Components.SpravaKrviEditor, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSpravaKrviEditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviEditorElement, ev: SpravaKrviEditorCustomEvent<HTMLSpravaKrviEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -148,25 +154,31 @@ declare global {
 }
 declare namespace LocalJSX {
     interface SpravaKrviApp {
+        "apiBase"?: string;
         "basePath"?: string;
     }
     interface SpravaKrviEditor {
+        "apiBase"?: string;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
+        "onEntry-clicked"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
     }
     interface SpravaKrviHomepage {
         "onDonors-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
         "onUnits-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
     }
     interface SpravaKrviList {
+        "apiBase"?: string;
         "onEditor-closed"?: (event: SpravaKrviListCustomEvent<string>) => void;
         "onEntry-clicked"?: (event: SpravaKrviListCustomEvent<string>) => void;
     }
     interface SpravaKrviUniteditor {
+        "apiBase"?: string;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviUniteditorCustomEvent<string>) => void;
     }
     interface SpravaKrviUnitlist {
+        "apiBase"?: string;
         "onEditor-closed"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
         "onEntry-clicked"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
     }

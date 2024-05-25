@@ -1,25 +1,48 @@
 :host {
-  --_wl-editor_gap: var(--wl-gap, 0.5rem);
+  --_wl-editor_gap: var(--wl-gap, 1rem); /* Increase gap for better spacing */
 
   display: flex;
   flex-direction: column;
   gap: var(--_wl-editor_gap);
   padding: var(--_wl-editor_gap);
+  max-width: 800px; /* Limit the maximum width for better readability */
+  margin: 0 auto; /* Center the form on the page */
+  
 }
 
-.duration-slider {
-  display: flex;
-  flex-direction: row;
-  align-content: space-around;
-  align-items: center;
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two-column layout for larger screens */
+  gap: var(--_wl-editor_gap);
 }
 
+form > * {
+  grid-column: span 1; /* Each element spans one column by default */
+}
+
+form > md-filled-text-field,
+form > md-filled-select,
+form > mwc-checkbox {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  form {
+    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+  }
+}
+
+.duration-slider,
 .actions {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--_wl-editor_gap);
+}
 
+.actions {
+  justify-content: flex-end;
 }
 
 .stretch-fill {
