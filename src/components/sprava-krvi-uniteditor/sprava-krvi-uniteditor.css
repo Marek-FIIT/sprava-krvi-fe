@@ -10,6 +10,10 @@
   
 }
 
+label {
+  font-size: 1.2em; /* Adjust the font size as needed */
+}
+
 form {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two-column layout for larger screens */

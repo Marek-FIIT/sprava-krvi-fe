@@ -10,7 +10,7 @@ export class SpravaKrviEditor {
   @Prop() entryId: string;
   @Prop() apiBase: string;
   @Event({eventName: "editor-closed"}) editorClosed: EventEmitter<string>;
-  @Event({eventName: "entry-clicked"}) entryClicked: EventEmitter<string>;
+  @Event({eventName: "unit-editor-closed"}) unitEntryClicked: EventEmitter<string>;
 
   @State() entry: Donor;
   @State() errorMessage:string;
@@ -185,7 +185,7 @@ export class SpravaKrviEditor {
         <md-filled-text-field label="Choroby" 
         value={this.entry?.diseases}
               oninput={ (ev: InputEvent) => {
-                if(this.entry) {this.entry.diseases = this.handleInputEvent(ev).split('')}
+                if(this.entry) {this.entry.diseases = this.handleInputEvent(ev).split(',')}
               } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
@@ -193,7 +193,7 @@ export class SpravaKrviEditor {
         <md-filled-text-field label="Lieky" 
         value={this.entry?.medications}
               oninput={ (ev: InputEvent) => {
-                if(this.entry) {this.entry.medications = this.handleInputEvent(ev).split('')}
+                if(this.entry) {this.entry.medications = this.handleInputEvent(ev).split(',')}
               } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
@@ -242,12 +242,12 @@ export class SpravaKrviEditor {
           onClick={() => this.editorClosed.emit("cancel")}>
           Zrušiť
         </md-outlined-button>
-        {/* <md-filled-button id="create" disabled={ !this.isValid }
-            onclick={() => this.entryClicked.emit("@newunit")}
+        <md-filled-button id="create" disabled={ !this.isValid }
+            onclick={() => this.unitEntryClicked.emit("@new")}
             >
           <md-icon slot="icon">create</md-icon>
           Vytvorit vzorky
-        </md-filled-button> */}
+        </md-filled-button>
         <md-filled-button id="confirm" disabled={ !this.isValid }
             onClick={() => this.updateEntry() }
             >

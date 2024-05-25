@@ -1,5 +1,5 @@
-import { Component, Host, Prop, State, h, EventEmitter, Event } from '@stencil/core';
-import { UnitsApiFactory, Unit} from '../../api/sprava-krvi';
+import { Component, Host, Prop, State, EventEmitter, Event, h } from '@stencil/core';
+import { UnitsApiFactory, Unit, UnitContents} from '../../api/sprava-krvi';
 @Component({
   tag: 'sprava-krvi-uniteditor',
   styleUrl: 'sprava-krvi-uniteditor.css',
@@ -7,7 +7,10 @@ import { UnitsApiFactory, Unit} from '../../api/sprava-krvi';
 })
 export class SpravaKrviUniteditor {
   @Prop() entryId: string;
+  @Prop() amountUnit: string;
   @Prop() apiBase: string;
+  @Prop() unitContent: UnitContents = { hemoglobin: 0, erythrocytes: false, leukocytes: false, platelets: false, plasma: false, additional: [] };
+
   @Event({eventName: "editor-closed"}) editorClosed: EventEmitter<string>;
 
   @State() entry: Unit;
@@ -17,6 +20,16 @@ export class SpravaKrviUniteditor {
   private formElement: HTMLFormElement;
   
   private async getUnitEntryAsync(): Promise<Unit> {
+    if(this.entryId === "@new") {
+      this.isValid = false;
+      this.entry = {
+        donor_id: "",
+        location: "",
+        contents: this.unitContent
+      };
+      return this.entry;
+    }
+
     if ( !this.entryId ) {
        this.isValid = false;
        return undefined
@@ -51,6 +64,16 @@ render() {
   return (
     <Host>
       <form ref={el => this.formElement = el}>
+      {this.entryId === "@new" && (
+        <md-filled-text-field label="Mnozstvo" 
+          value={0}
+          oninput={(ev: InputEvent) => {
+            this.amountUnit = this.handleInputEvent(ev);
+          }}>
+          <md-icon slot="leading-icon">fingerprint</md-icon>
+        </md-filled-text-field>
+      )}
+
         <md-filled-text-field label="ID" 
         value={this.entry?.id}
               oninput={ (ev: InputEvent) => {
@@ -110,16 +133,34 @@ render() {
           </md-select-option>
         </md-filled-select>
         
-        <md-filled-text-field label="Status" 
+        <md-filled-select label="Status"
             value={this.entry?.status}
-            oninput={ (ev: InputEvent) => {
+            oninput = { (ev: InputEvent) => {
                 if(this.entry) {this.entry.status = this.handleInputEvent(ev)}
             } }>
-          <md-icon slot="leading-icon">fingerprint</md-icon>
-        </md-filled-text-field>
+          <md-icon slot="leading-icon">sick</md-icon>
+          <md-select-option value="available">
+            <div slot="headline">available</div>
+          </md-select-option>
+          <md-select-option value="reserved">
+            <div slot="headline">reserved</div>
+          </md-select-option>
+          <md-select-option value="unprocessed">
+            <div slot="headline">unprocessed</div>
+          </md-select-option>
+          <md-select-option value="suspended">
+            <div slot="headline">suspended</div>
+          </md-select-option>
+          <md-select-option value="contaminated">
+            <div slot="headline">contaminated</div>
+          </md-select-option>
+          <md-select-option value="expired">
+            <div slot="headline">expired</div>
+          </md-select-option>
+        </md-filled-select>
 
         <md-filled-text-field label="Lokacia" 
-            requird value={this.entry?.location}
+            required value={this.entry?.location}
             oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.location = this.handleInputEvent(ev)}
             } }>
@@ -142,7 +183,7 @@ render() {
         <md-filled-text-field label="Choroby" 
         value={this.entry?.diseases}
               oninput={ (ev: InputEvent) => {
-                if(this.entry) {this.entry.diseases = this.handleInputEvent(ev).split('')}
+                if(this.entry) {this.entry.diseases = this.handleInputEvent(ev).split(',')}
               } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
@@ -179,22 +220,86 @@ render() {
 
       </form>
       
-      {/* // <div class="duration-slider">
-      //   <span class="label">Predpokladaná doba trvania:&nbsp; </span>
-      //   <span class="label">{this.duration}</span>
-      //   <span class="label">&nbsp;minút</span>
-      //   <md-slider
-      //     min="2" max="45" value={this.duration} ticks labeled
-      //     oninput={this.handleSliderInput.bind(this)}></md-slider>
-      // </div> */}
+      <hr class="line-separator" />
+      <hr class="line-separator" />
+      <label>Obsah</label>
+        <md-filled-text-field label="Heoglobin" 
+            required value={this.entry?.contents?.hemoglobin}
+            oninput={ (ev: InputEvent) => {
+                if(this.entry) {this.entry.contents.hemoglobin = parseFloat(this.handleInputEvent(ev))}
+            } }>
+          <md-icon slot="leading-icon">fingerprint</md-icon>
+        </md-filled-text-field>
 
+        <mwc-formfield label="Erytrocyty">
+          <mwc-checkbox label="Erytrocyty"
+          checked={this.entry?.contents?.erythrocytes}
+          required
+          oninput={(ev: InputEvent) => {
+            if (this.entry) {
+              this.entry.contents.erythrocytes = this.handleInputEventBoolean(ev);
+            }
+          }}>
+          <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
+          </mwc-checkbox>
+        </mwc-formfield>
+
+        <mwc-formfield label="Leukocyty">
+          <mwc-checkbox label="Leukocyty"
+          checked={this.entry?.contents?.leukocytes}
+          required
+          oninput={(ev: InputEvent) => {
+            if (this.entry) {
+              this.entry.contents.leukocytes = this.handleInputEventBoolean(ev);
+            }
+          }}>
+          <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
+          </mwc-checkbox>
+        </mwc-formfield>
+
+        <mwc-formfield label="Trombocyty">
+          <mwc-checkbox label="Trombocyty"
+          checked={this.entry?.contents?.platelets}
+          required
+          oninput={(ev: InputEvent) => {
+            if (this.entry) {
+              this.entry.contents.platelets = this.handleInputEventBoolean(ev);
+            }
+          }}>
+          <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
+          </mwc-checkbox>
+        </mwc-formfield>
+
+        <mwc-formfield label="Plazma">
+          <mwc-checkbox label="Plazma"
+          checked={this.entry?.contents?.plasma}
+          required
+          oninput={(ev: InputEvent) => {
+            if (this.entry) {
+              this.entry.contents.plasma = this.handleInputEventBoolean(ev);
+            }
+          }}>
+          <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
+          </mwc-checkbox>
+        </mwc-formfield>
+
+        <md-filled-text-field label="Dodatocne" 
+        value={this.entry?.contents?.additional}
+              oninput={ (ev: InputEvent) => {
+                if(this.entry) {this.entry.contents.additional = this.handleInputEvent(ev).split(',')}
+              } }>
+          <md-icon slot="leading-icon">fingerprint</md-icon>
+        </md-filled-text-field>
+        
       <md-divider></md-divider>
       <div class="actions">
+      {this.entryId !== "@new" && (
       <md-filled-tonal-button id="delete" disabled={!this.entry || this.entry?.id === "@new" }
             onClick={() => this.deleteEntry()} >
           <md-icon slot="icon">delete</md-icon>
           Zmazať
         </md-filled-tonal-button>
+        )}
         <span class="stretch-fill"></span>
         <md-outlined-button id="cancel"
           onClick={() => this.editorClosed.emit("cancel")}>
@@ -248,8 +353,11 @@ private handleInputEventBoolean(ev: InputEvent): boolean {
 
 private async updateEntry() {
   try {
-      const response = await UnitsApiFactory(undefined, this.apiBase)
-        .updateUnit(this.entryId, this.entry)
+    const api = UnitsApiFactory(undefined, this.apiBase);
+    const response
+       = this.entryId === "@new"
+       ? await api.createUnits(parseInt(this.amountUnit), this.entry)
+       : await api.updateUnit(this.entryId, this.entry);
       if (response.status < 299) {
         this.editorClosed.emit("store")
       } else {

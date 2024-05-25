@@ -36,21 +36,21 @@ export class SpravaKrviApp {
     let element = "homepage"
     let entryId = "@new"
   
-    if ( this.relativePath.startsWith("entry/"))
+    if ( this.relativePath.startsWith("donor_entry/"))
     {
-      element = "editor";
+      element = "donoreditor";
       entryId = this.relativePath.split("/")[1]
     }
 
-    if ( this.relativePath.startsWith("list"))
+    if ( this.relativePath.startsWith("donors"))
       {
-        element = "list";
+        element = "donors";
       }
-    if ( this.relativePath.startsWith("unitlist"))
+    if ( this.relativePath.startsWith("units"))
       {
-        element = "unitlist";
+        element = "units";
       }
-    if ( this.relativePath.startsWith("unitentry"))
+    if ( this.relativePath.startsWith("unit_entry"))
       {
         element = "uniteditor";
         entryId = this.relativePath.split("/")[1]
@@ -66,43 +66,44 @@ export class SpravaKrviApp {
         case "homepage":
           return (
             <sprava-krvi-homepage
-              ondonors-clicked={() => navigate("./list")}
-              onunits-clicked={() => navigate("./unitlist")}
+              ondonors-clicked={() => navigate("./donors")}
+              onunits-clicked={() => navigate("./units")}
             ></sprava-krvi-homepage>
           );
-        case "editor":
+        case "donoreditor":
           return (
             <sprava-krvi-editor api-base={this.apiBase}
               entry-id={entryId}
-              oneditor-closed={() => navigate("./list")}
+              oneditor-closed={() => navigate("./donoreditor")}
+              onunit-editor-closed={(ev: CustomEvent<string>) => navigate("./unit_entry/" + ev.detail)}
             ></sprava-krvi-editor>
           );
         case "uniteditor":
             return (
               <sprava-krvi-uniteditor api-base={this.apiBase}
                 entry-id={entryId}
-                oneditor-closed={() => navigate("./unitlist")}
+                oneditor-closed={() => navigate("./units") }
               ></sprava-krvi-uniteditor>
             );
-        case "list":
+        case "donors":
           return (
             <sprava-krvi-list api-base={this.apiBase}
-              onentry-clicked={(ev: CustomEvent<string>) => navigate("./entry/" + ev.detail)}
+              onentry-clicked={(ev: CustomEvent<string>) => navigate("./donor_entry/" + ev.detail)}
               oneditor-closed={() => navigate("./homepage")}
             ></sprava-krvi-list>
           );
-        case "unitlist":
+        case "units":
             return (
               <sprava-krvi-unitlist api-base={this.apiBase}
-                onentry-clicked={(ev: CustomEvent<string>) => navigate("./unitentry/" + ev.detail)}
+                onentry-clicked={(ev: CustomEvent<string>) => navigate("./unit_entry/" + ev.detail)}
                 oneditor-closed={() => navigate("./homepage")}
               ></sprava-krvi-unitlist>
             );
         default:
           return (
             <sprava-krvi-homepage
-              ondonors-clicked={() => navigate("./list")}
-              onunits-clicked={() => navigate("./unitlist")}
+              ondonors-clicked={() => navigate("./donors")}
+              onunits-clicked={() => navigate("./units")}
             ></sprava-krvi-homepage>
           );
       }

@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { UnitContents } from "./api/sprava-krvi";
+export { UnitContents } from "./api/sprava-krvi";
 export namespace Components {
     interface SpravaKrviApp {
         "apiBase": string;
@@ -18,13 +20,33 @@ export namespace Components {
     }
     interface SpravaKrviList {
         "apiBase": string;
+        "blood_rh": string;
+        "blood_type": string;
+        "eligible": string;
+        "eligible_bool": boolean;
     }
     interface SpravaKrviUniteditor {
+        "amountUnit": string;
         "apiBase": string;
         "entryId": string;
+        "unitContent": UnitContents;
     }
     interface SpravaKrviUnitlist {
         "apiBase": string;
+        "blood_rh": string;
+        "blood_type": string;
+        "erythrocytes": string;
+        "erythrocytes_bool": boolean;
+        "frozen": string;
+        "frozen_bool": boolean;
+        "leukocytes": string;
+        "leukocytes_bool": boolean;
+        "location": string;
+        "plasma": string;
+        "plasma_bool": boolean;
+        "platelets": string;
+        "platelets_bool": boolean;
+        "status": string;
     }
 }
 export interface SpravaKrviEditorCustomEvent<T> extends CustomEvent<T> {
@@ -56,7 +78,7 @@ declare global {
     };
     interface HTMLSpravaKrviEditorElementEventMap {
         "editor-closed": string;
-        "entry-clicked": string;
+        "unit-editor-closed": string;
     }
     interface HTMLSpravaKrviEditorElement extends Components.SpravaKrviEditor, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSpravaKrviEditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviEditorElement, ev: SpravaKrviEditorCustomEvent<HTMLSpravaKrviEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -161,7 +183,7 @@ declare namespace LocalJSX {
         "apiBase"?: string;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
-        "onEntry-clicked"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
+        "onUnit-editor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
     }
     interface SpravaKrviHomepage {
         "onDonors-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
@@ -169,18 +191,38 @@ declare namespace LocalJSX {
     }
     interface SpravaKrviList {
         "apiBase"?: string;
+        "blood_rh"?: string;
+        "blood_type"?: string;
+        "eligible"?: string;
+        "eligible_bool"?: boolean;
         "onEditor-closed"?: (event: SpravaKrviListCustomEvent<string>) => void;
         "onEntry-clicked"?: (event: SpravaKrviListCustomEvent<string>) => void;
     }
     interface SpravaKrviUniteditor {
+        "amountUnit"?: string;
         "apiBase"?: string;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviUniteditorCustomEvent<string>) => void;
+        "unitContent"?: UnitContents;
     }
     interface SpravaKrviUnitlist {
         "apiBase"?: string;
+        "blood_rh"?: string;
+        "blood_type"?: string;
+        "erythrocytes"?: string;
+        "erythrocytes_bool"?: boolean;
+        "frozen"?: string;
+        "frozen_bool"?: boolean;
+        "leukocytes"?: string;
+        "leukocytes_bool"?: boolean;
+        "location"?: string;
         "onEditor-closed"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
         "onEntry-clicked"?: (event: SpravaKrviUnitlistCustomEvent<string>) => void;
+        "plasma"?: string;
+        "plasma_bool"?: boolean;
+        "platelets"?: string;
+        "platelets_bool"?: boolean;
+        "status"?: string;
     }
     interface IntrinsicElements {
         "sprava-krvi-app": SpravaKrviApp;
