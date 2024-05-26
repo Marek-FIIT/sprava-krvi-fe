@@ -10,7 +10,7 @@ export class SpravaKrviEditor {
   @Prop() entryId: string;
   @Prop() apiBase: string;
   @Event({eventName: "editor-closed"}) editorClosed: EventEmitter<string>;
-  @Event({eventName: "unit-editor-closed"}) unitEntryClicked: EventEmitter<string>;
+  @Event({eventName: "unit-editor-open"}) unitEditorOpen: EventEmitter<string>;
 
   @State() entry: Donor;
   @State() errorMessage:string;
@@ -85,13 +85,16 @@ export class SpravaKrviEditor {
           <md-icon slot="leading-icon">person</md-icon>
         </md-filled-text-field>
 
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="ID" 
             value={this.entry?.id}
+            readonly
             oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.id = this.handleInputEvent(ev)}
             } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
+        )}
 
         <md-filled-text-field label="Rodné Číslo" 
             required value={this.entry?.birth_number}
@@ -155,7 +158,8 @@ export class SpravaKrviEditor {
           <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
           </mwc-checkbox>
         </mwc-formfield>
-
+        
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Posledné darovanie"
         type="date" 
         readonly 
@@ -165,6 +169,7 @@ export class SpravaKrviEditor {
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
+        )}
 
         <md-filled-text-field label="Email" 
         value={this.entry?.email}
@@ -197,7 +202,8 @@ export class SpravaKrviEditor {
               } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
-
+        
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Vytvorenie záznamu"
         type="date" 
         readonly
@@ -207,8 +213,9 @@ export class SpravaKrviEditor {
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
+        )}
 
-
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Úprava záznamu" 
         type="date"
         readonly
@@ -218,32 +225,25 @@ export class SpravaKrviEditor {
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
-
+        )}
       </form>
       
-      {/* // <div class="duration-slider">
-      //   <span class="label">Predpokladaná doba trvania:&nbsp; </span>
-      //   <span class="label">{this.duration}</span>
-      //   <span class="label">&nbsp;minút</span>
-      //   <md-slider
-      //     min="2" max="45" value={this.duration} ticks labeled
-      //     oninput={this.handleSliderInput.bind(this)}></md-slider>
-      // </div> */}
-
       <md-divider></md-divider>
       <div class="actions">
+      {this.entryId !== "@new" && (
       <md-filled-tonal-button id="delete" disabled={!this.entry || this.entry?.id === "@new" }
             onClick={() => this.deleteEntry()} >
           <md-icon slot="icon">delete</md-icon>
           Zmazať
         </md-filled-tonal-button>
+        )}
         <span class="stretch-fill"></span>
         <md-outlined-button id="cancel"
           onClick={() => this.editorClosed.emit("cancel")}>
           Zrušiť
         </md-outlined-button>
         <md-filled-button id="create" disabled={ !this.isValid }
-            onclick={() => this.unitEntryClicked.emit("@new")}
+            onclick={() => this.unitEditorOpen.emit(`@new?donorId=${this.entry?.id}&location=${this.entry.postal_code}&bloodType=${this.entry?.blood_type}&bloodRh=${encodeURIComponent(this.entry?.blood_rh)}`)}
             >
           <md-icon slot="icon">create</md-icon>
           Vytvorit vzorky

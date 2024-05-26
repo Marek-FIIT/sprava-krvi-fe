@@ -10,6 +10,7 @@ declare global {
 })
 export class SpravaKrviApp {
   @State() private relativePath = "";
+  @State() private queryParams = null;
   @Prop() basePath: string="";
   @Prop() apiBase: string;
 
@@ -26,8 +27,8 @@ export class SpravaKrviApp {
 
     window.navigation?.addEventListener("navigate", (ev: Event) => {
       if ((ev as any).canIntercept) { (ev as any).intercept(); }
-      let path = new URL((ev as any).destination.url).pathname;
-      toRelative(path);
+      let url = new URL((ev as any).destination.url)
+      toRelative(url.pathname);
     });
 
     toRelative(location.pathname)
@@ -57,8 +58,10 @@ export class SpravaKrviApp {
       }
   
     const navigate = (path:string) => {
-      const absolute = new URL(path, new URL(this.basePath, document.baseURI)).pathname;
-      window.navigation.navigate(absolute)
+      const url = new URL(path, new URL(this.basePath, document.baseURI))
+      this.queryParams = url.searchParams
+      // const absolute = new URL(path, new URL(this.basePath, document.baseURI)).pathname;
+      window.navigation.navigate(url.pathname)
     }
   
     const renderElement = () => {
@@ -75,13 +78,14 @@ export class SpravaKrviApp {
             <sprava-krvi-editor api-base={this.apiBase}
               entry-id={entryId}
               oneditor-closed={() => navigate("./donoreditor")}
-              onunit-editor-closed={(ev: CustomEvent<string>) => navigate("./unit_entry/" + ev.detail)}
+              onunit-editor-open={(ev: CustomEvent<string>) => navigate("./unit_entry/" + ev.detail)}
             ></sprava-krvi-editor>
           );
         case "uniteditor":
             return (
               <sprava-krvi-uniteditor api-base={this.apiBase}
                 entry-id={entryId}
+                donorData={this.queryParams}
                 oneditor-closed={() => navigate("./units") }
               ></sprava-krvi-uniteditor>
             );

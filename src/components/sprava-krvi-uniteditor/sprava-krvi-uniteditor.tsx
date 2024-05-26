@@ -7,6 +7,7 @@ import { UnitsApiFactory, Unit, UnitContents} from '../../api/sprava-krvi';
 })
 export class SpravaKrviUniteditor {
   @Prop() entryId: string;
+  @Prop() donorData: URLSearchParams;
   @Prop() amountUnit: string;
   @Prop() apiBase: string;
   @Prop() unitContent: UnitContents = { hemoglobin: 0, erythrocytes: false, leukocytes: false, platelets: false, plasma: false, additional: [] };
@@ -22,9 +23,12 @@ export class SpravaKrviUniteditor {
   private async getUnitEntryAsync(): Promise<Unit> {
     if(this.entryId === "@new") {
       this.isValid = false;
+      console.log(this.donorData.get('bloodRh'));
       this.entry = {
-        donor_id: "",
-        location: "",
+        donor_id: this.donorData.get('donorId'),
+        location: this.donorData.get('location'),
+        blood_type: this.donorData.get('bloodType'),
+        blood_rh: this.donorData.get('bloodRh'),
         contents: this.unitContent
       };
       return this.entry;
@@ -72,33 +76,37 @@ render() {
           }}>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
+        
       )}
 
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="ID" 
-        value={this.entry?.id}
-              oninput={ (ev: InputEvent) => {
+          value={this.entry?.id}
+          readonly
+          oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.id = this.handleInputEvent(ev)}
               } }>
           <md-icon slot="leading-icon">person</md-icon>
         </md-filled-text-field>
-
-        <form ref={el => this.formElement = el}></form>
-        <md-filled-text-field label="Darcove ID" 
+        )}
+        <md-filled-text-field label="Darcove ID"
+        readonly 
         required value={this.entry?.donor_id}
               oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.donor_id = this.handleInputEvent(ev)}
               } }>
           <md-icon slot="leading-icon">person</md-icon>
         </md-filled-text-field>
-
-        <md-filled-text-field label="ID darovania" 
+        {this.entryId !== "@new" && (
+        <md-filled-text-field label="ID darovania"
+            readonly 
             value={this.entry?.donation_id}
             oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.donation_id = this.handleInputEvent(ev)}
             } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
-
+        )}
         <md-filled-select label="Typ krvi"
             value={this.entry?.blood_type}
             oninput = { (ev: InputEvent) => {
@@ -133,6 +141,7 @@ render() {
           </md-select-option>
         </md-filled-select>
         
+        {this.entryId !== "@new" && (
         <md-filled-select label="Status"
             value={this.entry?.status}
             oninput = { (ev: InputEvent) => {
@@ -158,6 +167,7 @@ render() {
             <div slot="headline">expired</div>
           </md-select-option>
         </md-filled-select>
+        )}
 
         <md-filled-text-field label="Lokacia" 
             required value={this.entry?.location}
@@ -167,6 +177,7 @@ render() {
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
 
+        {this.entryId !== "@new" && (
         <mwc-formfield label="Zmrazene">
           <mwc-checkbox label="Zmrazene"
           checked={this.entry?.frozen}
@@ -179,6 +190,7 @@ render() {
           <mwc-icon slot="leading-icon">fingerprint</mwc-icon>
           </mwc-checkbox>
         </mwc-formfield>
+        )}
 
         <md-filled-text-field label="Choroby" 
         value={this.entry?.diseases}
@@ -187,7 +199,8 @@ render() {
               } }>
           <md-icon slot="leading-icon">fingerprint</md-icon>
         </md-filled-text-field>
-        
+
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Expiracia"
         type="date" 
         value={this.formatDate(this.entry?.expiration)}
@@ -196,34 +209,35 @@ render() {
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
+        )}
 
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Vytvorenie záznamu"
         type="date" 
-        readonly
         value={this.formatDate(this.entry?.created_at)}
         oninput={(ev: InputEvent) => {
             if(this.entry) {this.entry.created_at = this.parseInputDate(ev)}
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
+        )}
 
-
+        {this.entryId !== "@new" && (
         <md-filled-text-field label="Úprava záznamu" 
         type="date"
-        readonly
         value={this.formatDate(this.entry?.updated_at)}
         oninput={(ev: InputEvent) => {
             if(this.entry) {this.entry.updated_at = this.parseInputDate(ev)}
         }}>
         <md-icon slot="leading-icon">calendar</md-icon>
         </md-filled-text-field>
-
+        )}
       </form>
       
       <hr class="line-separator" />
       <hr class="line-separator" />
       <label>Obsah</label>
-        <md-filled-text-field label="Heoglobin" 
+        <md-filled-text-field label="Hemoglobin" 
             required value={this.entry?.contents?.hemoglobin}
             oninput={ (ev: InputEvent) => {
                 if(this.entry) {this.entry.contents.hemoglobin = parseFloat(this.handleInputEvent(ev))}

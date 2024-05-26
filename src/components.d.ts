@@ -28,6 +28,7 @@ export namespace Components {
     interface SpravaKrviUniteditor {
         "amountUnit": string;
         "apiBase": string;
+        "donorData": URLSearchParams;
         "entryId": string;
         "unitContent": UnitContents;
     }
@@ -78,7 +79,7 @@ declare global {
     };
     interface HTMLSpravaKrviEditorElementEventMap {
         "editor-closed": string;
-        "unit-editor-closed": string;
+        "unit-editor-open": string;
     }
     interface HTMLSpravaKrviEditorElement extends Components.SpravaKrviEditor, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSpravaKrviEditorElementEventMap>(type: K, listener: (this: HTMLSpravaKrviEditorElement, ev: SpravaKrviEditorCustomEvent<HTMLSpravaKrviEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -183,7 +184,7 @@ declare namespace LocalJSX {
         "apiBase"?: string;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
-        "onUnit-editor-closed"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
+        "onUnit-editor-open"?: (event: SpravaKrviEditorCustomEvent<string>) => void;
     }
     interface SpravaKrviHomepage {
         "onDonors-clicked"?: (event: SpravaKrviHomepageCustomEvent<string>) => void;
@@ -201,6 +202,7 @@ declare namespace LocalJSX {
     interface SpravaKrviUniteditor {
         "amountUnit"?: string;
         "apiBase"?: string;
+        "donorData"?: URLSearchParams;
         "entryId"?: string;
         "onEditor-closed"?: (event: SpravaKrviUniteditorCustomEvent<string>) => void;
         "unitContent"?: UnitContents;
