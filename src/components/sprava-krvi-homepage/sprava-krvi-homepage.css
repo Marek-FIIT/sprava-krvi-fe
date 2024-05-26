@@ -1,3 +1,29 @@
-:host {
-  display: block;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+h1 {
+  font-size: 4em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.button {
+  flex: 1; /* Each button takes equal width */
+  margin: 10px; /* Add margin for spacing */
+  font-size: 18px; /* Increase font size */
+  padding: 15px 30px; /* Increase padding */
 }

@@ -11,14 +11,20 @@ export class SpravaKrviHomepage {
   render() {
     return (
       <Host>
-        <div class="actions">
-        <md-filled-button id="Donors"
+        <div class="container">
+        <h1>
+            <span style={{ color: 'red' }}>Sprav</span>
+            <span style={{ color: 'black' }}>Krv</span>
+        </h1>
+        <p>Efektívny systém pre manažment darcov a ich jednotiek krvi, pre jednoduchý prehľad a modifikáciu týchto dát.</p>
+        <md-filled-button class="button" id="Donors"
           onClick={() => this.donorsClicked.emit("donors")}>
           Darcovia
         </md-filled-button>
-        <md-filled-button id="Units"
+
+        <md-filled-button class="button" id="Units"
           onClick={() => this.unitsClicked.emit("units")}>
-          Unity
+          Krvné jednotky
         </md-filled-button>
         </div>
       </Host>

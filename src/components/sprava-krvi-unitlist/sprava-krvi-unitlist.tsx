@@ -101,6 +101,8 @@ export class SpravaKrviUnitlist {
   render() {
     return (
       <Host>
+        <div class="container">
+        <h1>Zoznam jednotiek krvi</h1>
         <md-filled-select label="Filter blood type"
           oninput = { async (ev: InputEvent) => {{
             this.blood_type = this.handleInputEvent(ev);
@@ -303,6 +305,7 @@ export class SpravaKrviUnitlist {
       </md-filled-button>
     </div>
   )}
+  </div>
 </Host>
 
     );

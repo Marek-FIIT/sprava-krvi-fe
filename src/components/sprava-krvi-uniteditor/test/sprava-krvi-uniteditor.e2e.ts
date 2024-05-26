@@ -5,6 +5,10 @@ describe('sprava-krvi-uniteditor', () => {
     const page = await newE2EPage();
     await page.setContent(
       `
+      <div class="container">                                                                                                                              
+      <h1>                                                                                                                                               
+        Editovanie jednotky krvi                                                                                                                         
+      </h1> 
     <form>                                                                                                                                     
     <md-filled-text-field label="ID" readonly="">                                                                                            
       <md-icon slot="leading-icon">                                                                                                          

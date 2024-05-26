@@ -67,6 +67,13 @@ export class SpravaKrviEditor {
  }
   return (
     <Host>
+      <div class="container">
+      {this.entryId === "@new" && (
+        <h1>Vytvorenie darcu</h1>
+      )}
+       {this.entryId !== "@new" && (
+        <h1>Editovanie darcu</h1>
+      )}
       <form ref={el => this.formElement = el}>
         <md-filled-text-field label="Meno" 
         required value={this.entry?.first_name}
@@ -254,6 +261,7 @@ export class SpravaKrviEditor {
           Uložiť
         </md-filled-button>
       </div>
+    </div>
     </Host>
   );
 }

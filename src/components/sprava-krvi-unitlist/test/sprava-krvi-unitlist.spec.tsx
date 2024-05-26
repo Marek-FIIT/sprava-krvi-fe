@@ -10,6 +10,10 @@ describe('sprava-krvi-unitlist', () => {
     expect(page.root).toEqualHtml(`
       <sprava-krvi-unitlist>
         <mock:shadow-root>
+        <div class="container">                                                                                                                              
+          <h1>                                                                                                                                               
+            Zoznam jednotiek krvi                                                                                                                            
+          </h1>                           
         <md-filled-select label="Filter blood type">                                                                                               
           <md-icon slot="leading-icon">                                                                                                            
             sick                                                                                                                                   
@@ -209,6 +213,7 @@ describe('sprava-krvi-unitlist', () => {
         <div class="error">
           Cannot retrieve list of waiting patients: unknown
         </div>
+      </div>
         </mock:shadow-root>
       </sprava-krvi-unitlist>
     `);

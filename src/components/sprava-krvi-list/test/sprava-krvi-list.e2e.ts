@@ -4,6 +4,10 @@ describe('sprava-krvi-list', () => {
   it('renders', async () => {
     const page = await newE2EPage();
     await page.setContent(`
+    <div class="container">                                                                                                                              
+      <h1>                                                                                                                                               
+        Zoznam darcov                                                                                                                                    
+      </h1> 
     <md-filled-select label="Filter blood type">                                                                                               
     <md-icon slot="leading-icon">                                                                                                            
       sick                                                                                                                                   
@@ -77,6 +81,8 @@ describe('sprava-krvi-list', () => {
   <hr class="line-separator">
   <div class="error">
     Cannot retrieve list of waiting patients: unknown
-  </div>`);
+  </div>
+  </div>
+  `);
   });
 });

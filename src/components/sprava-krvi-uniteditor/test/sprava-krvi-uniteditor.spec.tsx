@@ -10,6 +10,10 @@ describe('sprava-krvi-uniteditor', () => {
     expect(page.root).toEqualHtml(`
       <sprava-krvi-uniteditor>
         <mock:shadow-root>
+        <div class="container">                                                                                                                              
+          <h1>                                                                                                                                               
+            Editovanie jednotky krvi                                                                                                                         
+          </h1> 
              <form>                                                                                                                                     
                <md-filled-text-field label="ID" readonly="">                                                                                            
                  <md-icon slot="leading-icon">                                                                                                          

@@ -67,10 +67,19 @@ render() {
  }
   return (
     <Host>
+      <div class="container">
+      {this.entryId === "@new" && (
+        <h1>Vytvorenie jednotiek krvi</h1>
+      )}
+       {this.entryId !== "@new" && (
+        <h1>Editovanie jednotky krvi</h1>
+      )}
+
       <form ref={el => this.formElement = el}>
       {this.entryId === "@new" && (
         <md-filled-text-field label="Mnozstvo" 
           value={0}
+          required
           oninput={(ev: InputEvent) => {
             this.amountUnit = this.handleInputEvent(ev);
           }}>
@@ -326,6 +335,7 @@ render() {
           <md-icon slot="icon">save</md-icon>
           Uložiť
         </md-filled-button>
+      </div>
       </div>
     </Host>
   );

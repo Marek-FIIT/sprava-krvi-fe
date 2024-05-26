@@ -10,6 +10,10 @@ describe('sprava-krvi-editor', () => {
     expect(page.root).toEqualHtml(`
       <sprava-krvi-editor>
         <mock:shadow-root>
+        <div class="container">                                                                                                                              
+          <h1>                                                                                                                                               
+            Editovanie darcu                                                                                                                                 
+          </h1> 
         <form>                                                                                                                                     
           <md-filled-text-field label="Meno" required="">                                                                                          
             <md-icon slot="leading-icon">
@@ -143,6 +147,7 @@ describe('sprava-krvi-editor', () => {
             </md-icon>
             Uložiť
           </md-filled-button>
+        </div>
         </div>
         </mock:shadow-root>
       </sprava-krvi-editor>

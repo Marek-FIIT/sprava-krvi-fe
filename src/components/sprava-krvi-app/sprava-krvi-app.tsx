@@ -115,5 +115,6 @@ export class SpravaKrviApp {
     
     return <Host>{renderElement()}</Host>;
   }
+  
 
 }

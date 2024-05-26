@@ -59,6 +59,8 @@ export class SpravaKrviList {
   render() {
     return (
       <Host>
+        <div class="container">
+        <h1>Zoznam darcov</h1>
           <md-filled-select label="Filter blood type"
           oninput = { async (ev: InputEvent) => {{
             this.blood_type = this.handleInputEvent(ev);
@@ -141,7 +143,7 @@ export class SpravaKrviList {
           ))}
         </md-list>
       )}
-      <md-filled-button id="cancel" onClick={() => this.editorClosed.emit("cancel")}>
+      <md-filled-button class="home-button" id="cancel" onClick={() => this.editorClosed.emit("cancel")}>
         <md-icon slot="icon">homepage</md-icon>
         Domov
       </md-filled-button>
@@ -152,6 +154,7 @@ export class SpravaKrviList {
     </md-filled-icon-button>
     </div>
   )}
+  </div>
 </Host>
 
     );
