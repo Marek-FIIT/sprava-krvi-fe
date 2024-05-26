@@ -82,7 +82,7 @@ describe('sprava-krvi-list', () => {
              </md-filled-select>
              <hr class="line-separator">
              <div class="error">
-               Cannot retrieve list of waiting patients: socket hang up
+               Cannot retrieve list of waiting patients: unknown
              </div>
         </mock:shadow-root>
       </sprava-krvi-list>
