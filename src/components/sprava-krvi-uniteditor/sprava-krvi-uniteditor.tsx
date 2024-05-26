@@ -214,6 +214,7 @@ render() {
         {this.entryId !== "@new" && (
         <md-filled-text-field label="Vytvorenie záznamu"
         type="date" 
+        readonly
         value={this.formatDate(this.entry?.created_at)}
         oninput={(ev: InputEvent) => {
             if(this.entry) {this.entry.created_at = this.parseInputDate(ev)}
@@ -225,6 +226,7 @@ render() {
         {this.entryId !== "@new" && (
         <md-filled-text-field label="Úprava záznamu" 
         type="date"
+        readonly
         value={this.formatDate(this.entry?.updated_at)}
         oninput={(ev: InputEvent) => {
             if(this.entry) {this.entry.updated_at = this.parseInputDate(ev)}
