@@ -76,7 +76,7 @@ describe('sprava-krvi-list', () => {
   </md-filled-select>
   <hr class="line-separator">
   <div class="error">
-    Cannot retrieve list of waiting patients: unknown
+    Cannot retrieve list of waiting patients: socket hang up
   </div>`);
   });
 });
