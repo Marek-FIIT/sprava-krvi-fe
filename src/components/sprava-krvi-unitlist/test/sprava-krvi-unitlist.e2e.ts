@@ -204,7 +204,5 @@ describe('sprava-krvi-unitlist', () => {
       Cannot retrieve list of waiting patients: unknown
     </div>`
     );
-
-    const element = await page.find('sprava-krvi-unitlist');
   });
 });

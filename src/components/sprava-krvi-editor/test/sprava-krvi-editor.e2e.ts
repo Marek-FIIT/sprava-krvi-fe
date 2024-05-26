@@ -139,7 +139,5 @@ describe('sprava-krvi-editor', () => {
       </md-filled-button>
     </div>
     `);
-
-    const element = await page.find('sprava-krvi-editor');
   });
 });

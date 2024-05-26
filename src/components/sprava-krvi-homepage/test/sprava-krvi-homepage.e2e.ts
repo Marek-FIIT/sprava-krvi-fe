@@ -13,7 +13,5 @@ describe('sprava-krvi-homepage', () => {
     </md-filled-button>
     </div>
     `);
-
-    const element = await page.find('sprava-krvi-homepage');
   });
 });

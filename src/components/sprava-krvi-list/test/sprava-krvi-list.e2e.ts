@@ -78,7 +78,5 @@ describe('sprava-krvi-list', () => {
   <div class="error">
     Cannot retrieve list of waiting patients: unknown
   </div>`);
-
-    const element = await page.find('sprava-krvi-list');
   });
 });

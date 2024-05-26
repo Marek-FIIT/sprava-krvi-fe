@@ -193,7 +193,5 @@ describe('sprava-krvi-uniteditor', () => {
 </div>
     `
     );
-
-    const element = await page.find('sprava-krvi-uniteditor');
   });
 });
