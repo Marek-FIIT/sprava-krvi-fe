@@ -248,12 +248,14 @@ export class SpravaKrviEditor {
           onClick={() => this.editorClosed.emit("cancel")}>
           Zrušiť
         </md-outlined-button>
+        {this.entryId !== "@new" && (
         <md-filled-button id="create" disabled={ !this.isValid }
             onclick={() => this.unitEditorOpen.emit(`@new?donorId=${this.entry?.id}&location=${this.entry.postal_code}&bloodType=${this.entry?.blood_type}&bloodRh=${encodeURIComponent(this.entry?.blood_rh)}`)}
             >
           <md-icon slot="icon">create</md-icon>
           Vytvorit vzorky
         </md-filled-button>
+        )}
         <md-filled-button id="confirm" disabled={ !this.isValid }
             onClick={() => this.updateEntry() }
             >
