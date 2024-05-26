@@ -76,7 +76,6 @@ export class SpravaKrviEditor {
           <md-icon slot="leading-icon">person</md-icon>
         </md-filled-text-field>
 
-        <form ref={el => this.formElement = el}></form>
         <md-filled-text-field label="Priezvisko" 
         required value={this.entry?.last_name}
               oninput={ (ev: InputEvent) => {

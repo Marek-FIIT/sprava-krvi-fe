@@ -10,7 +10,13 @@ describe('sprava-krvi-homepage', () => {
     expect(page.root).toEqualHtml(`
       <sprava-krvi-homepage>
         <mock:shadow-root>
-          <slot></slot>
+        <div class="actions">                                                                                                                      
+               <md-filled-button id="Donors">                                                                                                           
+                Darcovia                                                                                                                               
+              </md-filled-button>                                                                                                                      
+              <md-filled-button id="Units">
+                Unity
+              </md-filled-button>
         </mock:shadow-root>
       </sprava-krvi-homepage>
     `);
